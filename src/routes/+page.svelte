@@ -4,6 +4,8 @@
     import { Subscribe } from "svelte-subscribe";
     import { createTable, Render } from "svelte-headless-table";
     import { addHiddenColumns } from "svelte-headless-table/plugins";
+    import HeaderAddColmunMenu from "$lib/HeaderAddColumnMenu.svelte";
+    import HeaderColmunMenu from "$lib/HeaderColumnMenu.svelte";
 
     String.prototype.capitalize = function () {
         return this.charAt(0).toUpperCase() + this.slice(1);
@@ -115,12 +117,15 @@
                                 <th {...attrs} class="px-4 py-2 border-b-2 border-r text-left">
                                     <div class="flex flex-row gap-2">
                                         <div class="grow"><Render of={cell.render()} /></div>
-                                        <input id="hide-{cell.id}" type="checkbox" bind:checked={hideForId[cell.id]} />
+                                        <!-- <input id="hide-{cell.id}" type="checkbox" bind:checked={hideForId[cell.id]} /> -->
+                                        <HeaderColmunMenu />
                                     </div>
                                 </th>
                             </Subscribe>
                         {/each}
-                        <th class="px-4 py-2 border-b-2 text-left">+</th>
+                        <th class="px-4 py-2 border-b-2 text-left">
+                            <HeaderAddColmunMenu {ids} {hideForId} />
+                        </th>
                     </tr>
                 </Subscribe>
             {/each}

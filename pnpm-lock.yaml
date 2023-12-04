@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@rgossiaux/svelte-headlessui':
+    specifier: ^2.0.0
+    version: 2.0.0(svelte@4.2.8)
   '@sveltejs/adapter-node':
     specifier: 1.3.1
     version: 1.3.1(@sveltejs/kit@1.27.6)
@@ -417,6 +420,14 @@ packages:
 
   /@polka/url@1.0.0-next.23:
     resolution: {integrity: sha512-C16M+IYz0rgRhWZdCmK+h58JMv8vijAA61gmz2rspCSwKwzBebpdcsiUmwrtJRdphuY30i6BSLEOP8ppbNLyLg==}
+    dev: false
+
+  /@rgossiaux/svelte-headlessui@2.0.0(svelte@4.2.8):
+    resolution: {integrity: sha512-ksh245HqMM8yqkzd/OyAK2FCHZYOSA3ldLIHab7C9S60FmifqT24JFVgi8tZpsDEMk3plbfQvfah93n5IEi8sg==}
+    peerDependencies:
+      svelte: ^3.47.0
+    dependencies:
+      svelte: 4.2.8
     dev: false
 
   /@rollup/plugin-commonjs@25.0.7(rollup@3.29.4):
