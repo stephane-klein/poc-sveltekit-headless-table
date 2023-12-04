@@ -5,6 +5,7 @@
     import { Popover, PopoverButton, PopoverPanel } from "@rgossiaux/svelte-headlessui";
 
     console.log("ids", ids);
+    console.log("hideForId", hideForId);
 </script>
 
 <Popover style="position: relative;">
@@ -40,8 +41,8 @@
 
             {#each ids as id}
                 <div>
-                    <input id="hide-{id}" type="checkbox" bind:checked={hideForId[id]} />
-                    <label for="hide-{id}">{id}</label>
+                    <input id="col-hide-{id}" type="checkbox" bind:checked={hideForId[id]} />
+                    <label for="col-hide-{id}">{id}</label>
                 </div>
             {/each}
 

@@ -1,6 +1,6 @@
 <script>
     import { LoremIpsum } from "lorem-ipsum";
-    import { readable } from "svelte/store";
+    import { readable, writable } from "svelte/store";
     import { Subscribe } from "svelte-subscribe";
     import { createTable, Render } from "svelte-headless-table";
     import { addHiddenColumns } from "svelte-headless-table/plugins";
@@ -91,7 +91,7 @@
     const { flatColumns, headerRows, rows, tableAttrs, tableBodyAttrs, pluginStates } = table.createViewModel(columns);
     const { hiddenColumnIds } = pluginStates.hideCols;
     const ids = flatColumns.map((c) => c.id);
-    let hideForId = Object.fromEntries(ids.map((id) => [id, false]));
+    let hideForId = writable(Object.fromEntries(ids.map((id) => [id, false])));
     $: $hiddenColumnIds = Object.entries(hideForId)
         .filter(([, hide]) => hide)
         .map(([id]) => id);
