@@ -1,4 +1,5 @@
 <script>
+    export let onHideField;
     import { Popover, PopoverButton, PopoverPanel } from "@rgossiaux/svelte-headlessui";
 </script>
 
@@ -27,10 +28,7 @@
         <div
             class="w-56 shrink rounded-xl bg-white p-4 text-sm font-semibold leading-6 text-gray-900 shadow-lg ring-1 ring-gray-900/5"
         >
-            <a href="/analytics" class="block p-2 hover:text-indigo-600">Analytics</a>
-            <a href="/engagement" class="block p-2 hover:text-indigo-600">Engagement</a>
-            <a href="/security" class="block p-2 hover:text-indigo-600">Security</a>
-            <a href="/integrations" class="block p-2 hover:text-indigo-600">Integrations</a>
+            <a on:click={onHideField} class="cursor-pointer">Hide field</a>
         </div>
     </PopoverPanel>
 </Popover>

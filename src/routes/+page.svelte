@@ -112,8 +112,11 @@
                                 <th {...attrs} class="px-4 py-2 border-b-2 border-r text-left">
                                     <div class="flex flex-row gap-2">
                                         <div class="grow"><Render of={cell.render()} /></div>
-                                        <!-- <input id="hide-{cell.id}" type="checkbox" bind:checked={hideForId[cell.id]} /> -->
-                                        <HeaderColmunMenu />
+                                        <HeaderColmunMenu
+                                            onHideField={() => {
+                                                hideForId[cell.id] = true;
+                                            }}
+                                        />
                                     </div>
                                 </th>
                             </Subscribe>
