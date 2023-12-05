@@ -1,14 +1,14 @@
 <script>
-    export let hideForId;
-    export let updateHideForIdState;
+    export let state;
+    export let updateVisibleColumnsState;
 
     import { Popover, PopoverButton, PopoverPanel } from "@rgossiaux/svelte-headlessui";
 
     let visibleFields;
     let hiddenFields;
     $: {
-        visibleFields = Object.fromEntries(Object.entries(hideForId).filter((element) => element[1] === true));
-        hiddenFields = Object.fromEntries(Object.entries(hideForId).filter((element) => element[1] === false));
+        visibleFields = Object.fromEntries(Object.entries(state).filter((element) => element[1] === true));
+        hiddenFields = Object.fromEntries(Object.entries(state).filter((element) => element[1] === false));
     }
 </script>
 
@@ -43,10 +43,10 @@
                     <input
                         id="col-hide-{fieldName}"
                         type="checkbox"
-                        checked={hideForId[fieldName]}
+                        bind:checked={state[fieldName]}
                         on:input={(event) => {
-                            hideForId[fieldName] = event.target.checked;
-                            updateHideForIdState(hideForId);
+                            state[fieldName] = event.target.checked;
+                            updateVisibleColumnsState(state);
                         }}
                     />
                     <label for="col-hide-{fieldName}">{fieldName}</label>
@@ -60,10 +60,10 @@
                     <input
                         id="col-hide-{fieldName}"
                         type="checkbox"
-                        bind:checked={hideForId[fieldName]}
+                        bind:checked={state[fieldName]}
                         on:input={(event) => {
-                            hideForId[fieldName] = event.target.checked;
-                            updateHideForIdState(hideForId);
+                            state[fieldName] = event.target.checked;
+                            updateVisibleColumnsState(state);
                         }}
                     />
                     <label for="col-hide-{fieldName}">{fieldName}</label>
