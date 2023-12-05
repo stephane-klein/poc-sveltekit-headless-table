@@ -91,10 +91,15 @@
     const { flatColumns, headerRows, rows, tableAttrs, tableBodyAttrs, pluginStates } = table.createViewModel(columns);
     const { hiddenColumnIds } = pluginStates.hideCols;
     const ids = flatColumns.map((c) => c.id);
-    let hideForId = writable(Object.fromEntries(ids.map((id) => [id, false])));
+    let hideForId = Object.fromEntries(ids.map((id) => [id, false]));
     $: $hiddenColumnIds = Object.entries(hideForId)
         .filter(([, hide]) => hide)
         .map(([id]) => id);
+
+    function updateHideForIdState(updatedState) {
+        console.log("updateHideForState", updatedState);
+        hideForId = { ...updatedState };
+    }
 
     console.log("hideForId", hideForId);
 </script>
@@ -124,7 +129,7 @@
                             </Subscribe>
                         {/each}
                         <th class="px-4 py-2 border-b-2 text-left">
-                            <HeaderAddColmunMenu {ids} {hideForId} />
+                            <HeaderAddColmunMenu {ids} {hideForId} {updateHideForIdState} />
                         </th>
                     </tr>
                 </Subscribe>

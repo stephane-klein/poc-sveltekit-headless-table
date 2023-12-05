@@ -1,6 +1,7 @@
 <script>
     export let ids;
     export let hideForId;
+    export let updateHideForIdState;
 
     import { Popover, PopoverButton, PopoverPanel } from "@rgossiaux/svelte-headlessui";
 
@@ -41,7 +42,17 @@
 
             {#each ids as id}
                 <div>
-                    <input id="col-hide-{id}" type="checkbox" bind:checked={hideForId[id]} />
+                    <input
+                        id="col-hide-{id}"
+                        type="checkbox"
+                        checked={hideForId[id]}
+                        on:input={(event) => {
+                            console.log("event", event.target.checked);
+                            console.log("ici1", hideForId);
+                            hideForId[id] = event.target.checked;
+                            updateHideForIdState(hideForId);
+                        }}
+                    />
                     <label for="col-hide-{id}">{id}</label>
                 </div>
             {/each}
