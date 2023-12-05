@@ -107,7 +107,7 @@
                         {#each headerRow.cells as cell (cell.id)}
                             <Subscribe attrs={cell.attrs()} let:attrs>
                                 <th {...attrs} class="px-4 border-b-2 border-r text-left">
-                                    <div class="flex flex-row gap-2">
+                                    <div class="flex flex-row gap-2 items-center">
                                         <div class="grow text-gray-500 text-sm"><Render of={cell.render()} /></div>
                                         <HeaderColmunMenu
                                             onHideField={() => {
