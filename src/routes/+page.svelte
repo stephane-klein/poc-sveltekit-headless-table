@@ -96,8 +96,6 @@
         .map(([id]) => id);
 </script>
 
-<p>Hello</p>
-
 <div class="w-3/4 m-auto mt-8">
     <table {...$tableAttrs} class="w-full">
         <thead>
