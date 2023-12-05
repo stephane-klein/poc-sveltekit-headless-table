@@ -4,12 +4,12 @@
 </script>
 
 <Popover style="position: relative;">
-    <PopoverButton class="hover:bg-gray-100 px-2 py-1">
+    <PopoverButton class="hover:bg-gray-100 px-2 py-1 text-gray-600">
         <svg
             xmlns="http://www.w3.org/2000/svg"
             class="icon icon-tabler icon-tabler-dots"
-            width="24"
-            height="24"
+            width="16"
+            height="16"
             viewBox="0 0 24 24"
             stroke-width="2"
             stroke="currentColor"

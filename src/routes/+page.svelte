@@ -100,6 +100,8 @@
     }
 </script>
 
+<p>Hello</p>
+
 <div class="w-3/4 m-auto mt-8">
     <table {...$tableAttrs} class="w-full">
         <thead>
@@ -108,9 +110,9 @@
                     <tr {...rowAttrs}>
                         {#each headerRow.cells as cell (cell.id)}
                             <Subscribe attrs={cell.attrs()} let:attrs>
-                                <th {...attrs} class="px-4 py-2 border-b-2 border-r text-left">
+                                <th {...attrs} class="px-4 border-b-2 border-r text-left">
                                     <div class="flex flex-row gap-2">
-                                        <div class="grow"><Render of={cell.render()} /></div>
+                                        <div class="grow text-gray-500 text-sm"><Render of={cell.render()} /></div>
                                         <HeaderColmunMenu
                                             onHideField={() => {
                                                 visibleColumns[cell.id] = false;

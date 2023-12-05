@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-BODY {
+HTML {
+    font-size: 14px;
+    line-height: 21px;
     background-color: #fffcf9;
 }
