@@ -1,12 +1,15 @@
 <script>
-    export let ids;
     export let hideForId;
     export let updateHideForIdState;
 
     import { Popover, PopoverButton, PopoverPanel } from "@rgossiaux/svelte-headlessui";
 
-    console.log("ids", ids);
-    console.log("hideForId", hideForId);
+    let visibleFields;
+    let hiddenFields;
+    $: {
+        visibleFields = Object.fromEntries(Object.entries(hideForId).filter((element) => element[1] === true));
+        hiddenFields = Object.fromEntries(Object.entries(hideForId).filter((element) => element[1] === false));
+    }
 </script>
 
 <Popover style="position: relative;">
@@ -33,31 +36,39 @@
         <div
             class="w-56 shrink rounded-xl bg-white p-4 text-sm font-semibold leading-6 text-gray-900 shadow-lg ring-1 ring-gray-900/5"
         >
-            <a href="/analytics" class="block p-2 hover:text-indigo-600">Analytics</a>
-            <a href="/engagement" class="block p-2 hover:text-indigo-600">Engagement</a>
-            <a href="/security" class="block p-2 hover:text-indigo-600">Security</a>
-            <a href="/integrations" class="block p-2 hover:text-indigo-600">Integrations</a>
-
             <h3>Visible fields</h3>
 
-            {#each ids as id}
+            {#each Object.keys(visibleFields) as fieldName}
                 <div>
                     <input
-                        id="col-hide-{id}"
+                        id="col-hide-{fieldName}"
                         type="checkbox"
-                        checked={hideForId[id]}
+                        checked={hideForId[fieldName]}
                         on:input={(event) => {
-                            console.log("event", event.target.checked);
-                            console.log("ici1", hideForId);
-                            hideForId[id] = event.target.checked;
+                            hideForId[fieldName] = event.target.checked;
                             updateHideForIdState(hideForId);
                         }}
                     />
-                    <label for="col-hide-{id}">{id}</label>
+                    <label for="col-hide-{fieldName}">{fieldName}</label>
                 </div>
             {/each}
 
             <h3>Hidden fields</h3>
+
+            {#each Object.keys(hiddenFields) as fieldName}
+                <div>
+                    <input
+                        id="col-hide-{fieldName}"
+                        type="checkbox"
+                        bind:checked={hideForId[fieldName]}
+                        on:input={(event) => {
+                            hideForId[fieldName] = event.target.checked;
+                            updateHideForIdState(hideForId);
+                        }}
+                    />
+                    <label for="col-hide-{fieldName}">{fieldName}</label>
+                </div>
+            {/each}
         </div>
     </PopoverPanel>
 </Popover>

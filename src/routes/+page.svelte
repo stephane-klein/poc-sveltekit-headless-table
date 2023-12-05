@@ -97,19 +97,9 @@
         .map(([id]) => id);
 
     function updateHideForIdState(updatedState) {
-        console.log("updateHideForState", updatedState);
         hideForId = { ...updatedState };
     }
-
-    console.log("hideForId", hideForId);
 </script>
-
-{#each ids as id}
-    <div>
-        <input id="hide-{id}" type="checkbox" bind:checked={hideForId[id]} />
-        <label for="hide-{id}">{id}</label>
-    </div>
-{/each}
 
 <div class="w-3/4 m-auto mt-8">
     <table {...$tableAttrs} class="w-full">
@@ -129,7 +119,7 @@
                             </Subscribe>
                         {/each}
                         <th class="px-4 py-2 border-b-2 text-left">
-                            <HeaderAddColmunMenu {ids} {hideForId} {updateHideForIdState} />
+                            <HeaderAddColmunMenu {hideForId} {updateHideForIdState} />
                         </th>
                     </tr>
                 </Subscribe>
