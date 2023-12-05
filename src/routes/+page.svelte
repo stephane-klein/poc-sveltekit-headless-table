@@ -94,10 +94,6 @@
     $: $hiddenColumnIds = Object.entries(visibleColumns)
         .filter(([, visible]) => !visible)
         .map(([id]) => id);
-
-    function updateVisibleColumnsState(updatedState) {
-        visibleColumns = { ...updatedState };
-    }
 </script>
 
 <p>Hello</p>
@@ -123,7 +119,7 @@
                             </Subscribe>
                         {/each}
                         <th class="px-4 py-2 border-b-2 text-left">
-                            <HeaderAddColmunMenu state={visibleColumns} {updateVisibleColumnsState} />
+                            <HeaderAddColmunMenu bind:state={visibleColumns} />
                         </th>
                     </tr>
                 </Subscribe>

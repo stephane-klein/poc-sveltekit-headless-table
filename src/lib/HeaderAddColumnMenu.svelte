@@ -1,6 +1,5 @@
 <script>
     export let state;
-    export let updateVisibleColumnsState;
 
     import { Popover, PopoverButton, PopoverPanel } from "@rgossiaux/svelte-headlessui";
 
@@ -40,15 +39,7 @@
 
             {#each Object.keys(visibleFields) as fieldName}
                 <div>
-                    <input
-                        id="col-hide-{fieldName}"
-                        type="checkbox"
-                        bind:checked={state[fieldName]}
-                        on:input={(event) => {
-                            state[fieldName] = event.target.checked;
-                            updateVisibleColumnsState(state);
-                        }}
-                    />
+                    <input id="col-hide-{fieldName}" type="checkbox" bind:checked={state[fieldName]} />
                     <label for="col-hide-{fieldName}">{fieldName}</label>
                 </div>
             {/each}
@@ -57,15 +48,7 @@
 
             {#each Object.keys(hiddenFields) as fieldName}
                 <div>
-                    <input
-                        id="col-hide-{fieldName}"
-                        type="checkbox"
-                        bind:checked={state[fieldName]}
-                        on:input={(event) => {
-                            state[fieldName] = event.target.checked;
-                            updateVisibleColumnsState(state);
-                        }}
-                    />
+                    <input id="col-hide-{fieldName}" type="checkbox" bind:checked={state[fieldName]} />
                     <label for="col-hide-{fieldName}">{fieldName}</label>
                 </div>
             {/each}
