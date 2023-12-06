@@ -122,10 +122,12 @@
     $: $hiddenColumnIds = Object.entries(visibleColumns)
         .filter(([, visible]) => !visible)
         .map(([id]) => id);
+
+    let panelHorizontal = true;
 </script>
 
 <div class="h-screen">
-    <Splitpanes>
+    <Splitpanes horizontal={panelHorizontal}>
         <Pane minSize={40}>
             <table {...$tableAttrs} class="w-full">
                 <thead>
@@ -176,6 +178,10 @@
         {#if $detailPanelData !== null}
             <Pane minSize={20} size={40}>
                 <div class="p-4">
+                    <button on:click={() => (panelHorizontal = false)}>Vertical</button>
+                    |
+                    <button on:click={() => (panelHorizontal = true)}>Horizontal</button>
+                    <hr />
                     Panel right
 
                     <p>
