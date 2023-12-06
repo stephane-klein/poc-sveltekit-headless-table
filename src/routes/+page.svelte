@@ -4,10 +4,11 @@
     import { Subscribe } from "svelte-subscribe";
     import { createTable, Render, createRender } from "svelte-headless-table";
     import { addHiddenColumns } from "svelte-headless-table/plugins";
+    import { Pane, Splitpanes } from "svelte-splitpanes";
+
     import HeaderAddColmunMenu from "$lib/HeaderAddColumnMenu.svelte";
     import HeaderColmunMenu from "$lib/HeaderColumnMenu.svelte";
     import TitleCellRender from "$lib/TitleCellRender.svelte";
-    import HSplitPane from "$lib/HSplitPane.svelte";
 
     String.prototype.capitalize = function () {
         return this.charAt(0).toUpperCase() + this.slice(1);
@@ -121,28 +122,11 @@
     $: $hiddenColumnIds = Object.entries(visibleColumns)
         .filter(([, visible]) => !visible)
         .map(([id]) => id);
-
-    let leftPaneSize;
-    let rightPaneSize;
-    let minLeftPaneSize;
-    let minRightPaneSize;
-
-    $: if ($detailPanelData === null) {
-        leftPaneSize = "100%";
-        rightPaneSize = "0%";
-        minLeftPaneSize = "100%";
-        minRightPaneSize = "0%";
-    } else {
-        leftPaneSize = "75%";
-        rightPaneSize = "25%";
-        minLeftPaneSize = "40%";
-        minRightPaneSize = "15%";
-    }
 </script>
 
 <div class="h-screen">
-    <HSplitPane {leftPaneSize} {rightPaneSize} {minLeftPaneSize} {minRightPaneSize}>
-        <left slot="left">
+    <Splitpanes>
+        <Pane minSize={40}>
             <table {...$tableAttrs} class="w-full">
                 <thead>
                     {#each $headerRows as headerRow (headerRow.id)}
@@ -188,15 +172,23 @@
                     {/each}
                 </tbody>
             </table>
-        </left>
-        <right slot="right">
-            <div class="p-4">
-                Panel right
+        </Pane>
+        {#if $detailPanelData !== null}
+            <Pane minSize={20} size={40}>
+                <div class="p-4">
+                    Panel right
 
-                <p>Title : {$detailPanelData?.title || "-"}</p>
+                    <p>
+                        Title : {#if $detailPanelData?.title}
+                            <input type="text" bind:value={$detailPanelData.title} />
+                        {:else}
+                            -
+                        {/if}
 
-                <button on:click={() => ($detailPanelData = null)}>Close</button>
-            </div>
-        </right>
-    </HSplitPane>
+                        <button on:click={() => ($detailPanelData = null)}>Close</button>
+                    </p>
+                </div>
+            </Pane>
+        {/if}
+    </Splitpanes>
 </div>
