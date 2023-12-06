@@ -126,7 +126,7 @@
         <tbody {...$tableBodyAttrs}>
             {#each $rows as row (row.id)}
                 <Subscribe rowAttrs={row.attrs()} let:rowAttrs>
-                    <tr {...rowAttrs}>
+                    <tr {...rowAttrs} class="hover:bg-gray-100 cursor-pointer">
                         {#each row.cells as cell (cell.id)}
                             <Subscribe attrs={cell.attrs()} let:attrs>
                                 <td {...attrs} class="px-4 py-2 border-b border-r">
