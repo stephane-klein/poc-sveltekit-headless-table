@@ -194,6 +194,8 @@
                 Panel right
 
                 <p>Title : {$detailPanelData?.title || "-"}</p>
+
+                <button on:click={() => ($detailPanelData = null)}>Close</button>
             </div>
         </right>
     </HSplitPane>
