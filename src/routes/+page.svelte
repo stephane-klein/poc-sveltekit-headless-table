@@ -14,6 +14,8 @@
 
     const lorem = new LoremIpsum();
 
+    const detailPanelData = writable({});
+
     const data = readable([
         {
             id: 1,
@@ -103,6 +105,7 @@
                     console.log("ici1");
                     console.log(event);
                     console.log(value);
+                    $detailPanelData = value;
                 })
         }),
         table.column({
@@ -119,7 +122,7 @@
         .map(([id]) => id);
 </script>
 
-<div class="flex flex-row h-full">
+<div class="flex flex-row h-screen">
     <div class="h-full grow">
         <table {...$tableAttrs} class="w-full">
             <thead>
@@ -153,7 +156,7 @@
                         <tr {...rowAttrs} class="hover:bg-gray-100 cursor-pointer">
                             {#each row.cells as cell (cell.id)}
                                 <Subscribe attrs={cell.attrs()} let:attrs>
-                                    <td {...attrs} class="px-4 py-2 border-b border-r">
+                                    <td {...attrs} class="border-b border-r">
                                         <Render of={cell.render()} />
                                     </td>
                                 </Subscribe>
@@ -172,6 +175,10 @@
                 cursor-col-resize"
             ></div>
         </div>
-        <div class="px-2">Panel right</div>
+        <div class="px-2">
+            Panel right
+
+            <p>Title : {$detailPanelData?.title || "-"}</p>
+        </div>
     </div>
 </div>
