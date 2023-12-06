@@ -99,6 +99,10 @@
                 createRender(TitleCellRender, {
                     id: value.id,
                     title: value.title
+                }).on("click", (event) => {
+                    console.log("ici1");
+                    console.log(event);
+                    console.log(value);
                 })
         }),
         table.column({
@@ -115,48 +119,59 @@
         .map(([id]) => id);
 </script>
 
-<div class="w-3/4 m-auto mt-8">
-    <table {...$tableAttrs} class="w-full">
-        <thead>
-            {#each $headerRows as headerRow (headerRow.id)}
-                <Subscribe rowAttrs={headerRow.attrs()} let:rowAttrs>
-                    <tr {...rowAttrs}>
-                        {#each headerRow.cells as cell (cell.id)}
-                            <Subscribe attrs={cell.attrs()} let:attrs>
-                                <th {...attrs} class="px-4 border-b-2 border-r text-left">
-                                    <div class="flex flex-row gap-2 items-center">
-                                        <div class="grow text-gray-500 text-sm"><Render of={cell.render()} /></div>
-                                        <HeaderColmunMenu
-                                            onHideField={() => {
-                                                visibleColumns[cell.id] = false;
-                                            }}
-                                        />
-                                    </div>
-                                </th>
-                            </Subscribe>
-                        {/each}
-                        <th class="px-4 py-2 border-b-2 text-left">
-                            <HeaderAddColmunMenu bind:state={visibleColumns} />
-                        </th>
-                    </tr>
-                </Subscribe>
-            {/each}
-        </thead>
-        <tbody {...$tableBodyAttrs}>
-            {#each $rows as row (row.id)}
-                <Subscribe rowAttrs={row.attrs()} let:rowAttrs>
-                    <tr {...rowAttrs} class="hover:bg-gray-100 cursor-pointer">
-                        {#each row.cells as cell (cell.id)}
-                            <Subscribe attrs={cell.attrs()} let:attrs>
-                                <td {...attrs} class="px-4 py-2 border-b border-r">
-                                    <Render of={cell.render()} />
-                                </td>
-                            </Subscribe>
-                        {/each}
-                        <td class="px-4 py-2 border-b"></td>
-                    </tr>
-                </Subscribe>
-            {/each}
-        </tbody>
-    </table>
+<div class="flex flex-row h-full">
+    <div class="h-full grow">
+        <table {...$tableAttrs} class="w-full">
+            <thead>
+                {#each $headerRows as headerRow (headerRow.id)}
+                    <Subscribe rowAttrs={headerRow.attrs()} let:rowAttrs>
+                        <tr {...rowAttrs}>
+                            {#each headerRow.cells as cell (cell.id)}
+                                <Subscribe attrs={cell.attrs()} let:attrs>
+                                    <th {...attrs} class="px-4 border-b-2 border-r text-left">
+                                        <div class="flex flex-row gap-2 items-center">
+                                            <div class="grow text-gray-500 text-sm"><Render of={cell.render()} /></div>
+                                            <HeaderColmunMenu
+                                                onHideField={() => {
+                                                    visibleColumns[cell.id] = false;
+                                                }}
+                                            />
+                                        </div>
+                                    </th>
+                                </Subscribe>
+                            {/each}
+                            <th class="px-4 py-2 border-b-2 text-left">
+                                <HeaderAddColmunMenu bind:state={visibleColumns} />
+                            </th>
+                        </tr>
+                    </Subscribe>
+                {/each}
+            </thead>
+            <tbody {...$tableBodyAttrs}>
+                {#each $rows as row (row.id)}
+                    <Subscribe rowAttrs={row.attrs()} let:rowAttrs>
+                        <tr {...rowAttrs} class="hover:bg-gray-100 cursor-pointer">
+                            {#each row.cells as cell (cell.id)}
+                                <Subscribe attrs={cell.attrs()} let:attrs>
+                                    <td {...attrs} class="px-4 py-2 border-b border-r">
+                                        <Render of={cell.render()} />
+                                    </td>
+                                </Subscribe>
+                            {/each}
+                            <td class="px-4 py-2 border-b"></td>
+                        </tr>
+                    </Subscribe>
+                {/each}
+            </tbody>
+        </table>
+    </div>
+    <div class="w-1/4 border flex flex-row">
+        <div class="relative w-2">
+            <div
+                class="absolute bg-gray-300 h-full w-1 hover:border-x-4 hover:border-gray-200 box-content
+                cursor-col-resize"
+            ></div>
+        </div>
+        <div class="px-2">Panel right</div>
+    </div>
 </div>
