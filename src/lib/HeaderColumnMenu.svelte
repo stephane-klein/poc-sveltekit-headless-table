@@ -26,9 +26,12 @@
 
     <PopoverPanel class="absolute -left-5 z-10 flex w-screen max-w-min px-4">
         <div
-            class="w-56 shrink rounded-xl bg-white p-4 text-sm font-semibold leading-6 text-gray-900 shadow-lg ring-1 ring-gray-900/5"
+            class="w-56 shrink rounded-xl bg-white p-4 text-sm font-semibold leading-6 text-gray-900 shadow ring-1 ring-gray-900/5"
         >
-            <a on:click={onHideField} class="cursor-pointer hover:bg-gray-100 w-full block px-2 py-1 rounded-md">
+            <a
+                on:click={onHideField}
+                class="cursor-pointer hover:bg-gray-100 w-full block px-2 py-1 rounded-md text-gray-500"
+            >
                 Hide field
             </a>
         </div>
