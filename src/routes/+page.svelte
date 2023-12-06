@@ -7,6 +7,7 @@
     import HeaderAddColmunMenu from "$lib/HeaderAddColumnMenu.svelte";
     import HeaderColmunMenu from "$lib/HeaderColumnMenu.svelte";
     import TitleCellRender from "$lib/TitleCellRender.svelte";
+    import HSplitPane from "$lib/HSplitPane.svelte";
 
     String.prototype.capitalize = function () {
         return this.charAt(0).toUpperCase() + this.slice(1);
@@ -14,7 +15,7 @@
 
     const lorem = new LoremIpsum();
 
-    const detailPanelData = writable({});
+    const detailPanelData = writable(null);
 
     const data = readable([
         {
@@ -120,65 +121,80 @@
     $: $hiddenColumnIds = Object.entries(visibleColumns)
         .filter(([, visible]) => !visible)
         .map(([id]) => id);
+
+    let leftPaneSize;
+    let rightPaneSize;
+    let minLeftPaneSize;
+    let minRightPaneSize;
+
+    $: if ($detailPanelData === null) {
+        leftPaneSize = "100%";
+        rightPaneSize = "0%";
+        minLeftPaneSize = "100%";
+        minRightPaneSize = "0%";
+    } else {
+        leftPaneSize = "75%";
+        rightPaneSize = "25%";
+        minLeftPaneSize = "40%";
+        minRightPaneSize = "15%";
+    }
 </script>
 
-<div class="flex flex-row h-screen">
-    <div class="h-full grow">
-        <table {...$tableAttrs} class="w-full">
-            <thead>
-                {#each $headerRows as headerRow (headerRow.id)}
-                    <Subscribe rowAttrs={headerRow.attrs()} let:rowAttrs>
-                        <tr {...rowAttrs}>
-                            {#each headerRow.cells as cell (cell.id)}
-                                <Subscribe attrs={cell.attrs()} let:attrs>
-                                    <th {...attrs} class="px-4 border-b-2 border-r text-left">
-                                        <div class="flex flex-row gap-2 items-center">
-                                            <div class="grow text-gray-500 text-sm"><Render of={cell.render()} /></div>
-                                            <HeaderColmunMenu
-                                                onHideField={() => {
-                                                    visibleColumns[cell.id] = false;
-                                                }}
-                                            />
-                                        </div>
-                                    </th>
-                                </Subscribe>
-                            {/each}
-                            <th class="px-4 py-2 border-b-2 text-left">
-                                <HeaderAddColmunMenu bind:state={visibleColumns} />
-                            </th>
-                        </tr>
-                    </Subscribe>
-                {/each}
-            </thead>
-            <tbody {...$tableBodyAttrs}>
-                {#each $rows as row (row.id)}
-                    <Subscribe rowAttrs={row.attrs()} let:rowAttrs>
-                        <tr {...rowAttrs} class="hover:bg-gray-100 cursor-pointer">
-                            {#each row.cells as cell (cell.id)}
-                                <Subscribe attrs={cell.attrs()} let:attrs>
-                                    <td {...attrs} class="border-b border-r">
-                                        <Render of={cell.render()} />
-                                    </td>
-                                </Subscribe>
-                            {/each}
-                            <td class="px-4 py-2 border-b"></td>
-                        </tr>
-                    </Subscribe>
-                {/each}
-            </tbody>
-        </table>
-    </div>
-    <div class="w-1/4 border flex flex-row">
-        <div class="relative w-2">
-            <div
-                class="absolute bg-gray-300 h-full w-1 hover:border-x-4 hover:border-gray-200 box-content
-                cursor-col-resize"
-            ></div>
-        </div>
-        <div class="px-2">
-            Panel right
+<div class="h-screen">
+    <HSplitPane {leftPaneSize} {rightPaneSize} {minLeftPaneSize} {minRightPaneSize}>
+        <left slot="left">
+            <table {...$tableAttrs} class="w-full">
+                <thead>
+                    {#each $headerRows as headerRow (headerRow.id)}
+                        <Subscribe rowAttrs={headerRow.attrs()} let:rowAttrs>
+                            <tr {...rowAttrs}>
+                                {#each headerRow.cells as cell (cell.id)}
+                                    <Subscribe attrs={cell.attrs()} let:attrs>
+                                        <th {...attrs} class="px-4 border-b-2 border-r text-left">
+                                            <div class="flex flex-row gap-2 items-center">
+                                                <div class="grow text-gray-500 text-sm">
+                                                    <Render of={cell.render()} />
+                                                </div>
+                                                <HeaderColmunMenu
+                                                    onHideField={() => {
+                                                        visibleColumns[cell.id] = false;
+                                                    }}
+                                                />
+                                            </div>
+                                        </th>
+                                    </Subscribe>
+                                {/each}
+                                <th class="px-4 py-2 border-b-2 text-left">
+                                    <HeaderAddColmunMenu bind:state={visibleColumns} />
+                                </th>
+                            </tr>
+                        </Subscribe>
+                    {/each}
+                </thead>
+                <tbody {...$tableBodyAttrs}>
+                    {#each $rows as row (row.id)}
+                        <Subscribe rowAttrs={row.attrs()} let:rowAttrs>
+                            <tr {...rowAttrs} class="hover:bg-gray-100 cursor-pointer">
+                                {#each row.cells as cell (cell.id)}
+                                    <Subscribe attrs={cell.attrs()} let:attrs>
+                                        <td {...attrs} class="border-b border-r">
+                                            <Render of={cell.render()} />
+                                        </td>
+                                    </Subscribe>
+                                {/each}
+                                <td class="px-4 py-2 border-b"></td>
+                            </tr>
+                        </Subscribe>
+                    {/each}
+                </tbody>
+            </table>
+        </left>
+        <right slot="right">
+            <div class="p-4">
+                Panel right
 
-            <p>Title : {$detailPanelData?.title || "-"}</p>
-        </div>
-    </div>
+                <p>Title : {$detailPanelData?.title || "-"}</p>
+            </div>
+        </right>
+    </HSplitPane>
 </div>
