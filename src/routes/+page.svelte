@@ -2,10 +2,11 @@
     import { LoremIpsum } from "lorem-ipsum";
     import { readable, writable } from "svelte/store";
     import { Subscribe } from "svelte-subscribe";
-    import { createTable, Render } from "svelte-headless-table";
+    import { createTable, Render, createRender } from "svelte-headless-table";
     import { addHiddenColumns } from "svelte-headless-table/plugins";
     import HeaderAddColmunMenu from "$lib/HeaderAddColumnMenu.svelte";
     import HeaderColmunMenu from "$lib/HeaderColumnMenu.svelte";
+    import TitleCellRender from "$lib/TitleCellRender.svelte";
 
     String.prototype.capitalize = function () {
         return this.charAt(0).toUpperCase() + this.slice(1);
@@ -15,59 +16,72 @@
 
     const data = readable([
         {
+            id: 1,
             title: lorem.generateWords(5).capitalize(),
             status: "Todo"
         },
         {
+            id: 2,
             title: lorem.generateWords(8).capitalize(),
             status: "Todo"
         },
         {
+            id: 3,
             title: lorem.generateWords(10).capitalize(),
             status: "Todo"
         },
         {
+            id: 4,
             title: lorem.generateWords(10).capitalize(),
-
             status: "Todo"
         },
         {
+            id: 5,
             title: lorem.generateWords(7).capitalize(),
             status: "Todo"
         },
         {
+            id: 6,
             title: lorem.generateWords(6).capitalize(),
             status: "Todo"
         },
         {
+            id: 7,
             title: lorem.generateWords(9).capitalize(),
             status: "Todo"
         },
         {
+            id: 8,
             title: lorem.generateWords(3).capitalize(),
             status: "Todo"
         },
         {
+            id: 9,
             title: lorem.generateWords(9).capitalize(),
             status: "Todo"
         },
         {
+            id: 10,
             title: lorem.generateWords(12).capitalize(),
             status: "Todo"
         },
         {
+            id: 11,
             title: lorem.generateWords(5).capitalize(),
             status: "Todo"
         },
         {
+            id: 12,
             title: lorem.generateWords(8).capitalize(),
             status: "Todo"
         },
         {
+            id: 13,
             title: lorem.generateWords(9).capitalize(),
             status: "Todo"
         },
         {
+            id: 14,
             title: lorem.generateWords(4).capitalize(),
             status: "Todo"
         }
@@ -80,7 +94,12 @@
     const columns = table.createColumns([
         table.column({
             header: "Title",
-            accessor: "title"
+            accessor: (item) => item,
+            cell: ({ value }) =>
+                createRender(TitleCellRender, {
+                    id: value.id,
+                    title: value.title
+                })
         }),
         table.column({
             header: "Status",
