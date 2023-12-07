@@ -17,9 +17,9 @@
 
     const lorem = new LoremIpsum();
 
-    const detailPanelData = writable(null);
+    const detailPanelRowDataId = writable(null);
 
-    const data = readable([
+    const data = writable([
         {
             id: 1,
             title: lorem.generateWords(5).capitalize(),
@@ -100,15 +100,12 @@
         table.column({
             header: "Title",
             accessor: (item) => item,
-            cell: ({ value }) =>
+            cell: ({ row, value }) =>
                 createRender(TitleCellRender, {
                     id: value.id,
                     title: value.title
                 }).on("click", (event) => {
-                    console.log("ici1");
-                    console.log(event);
-                    console.log(value);
-                    $detailPanelData = value;
+                    $detailPanelRowDataId = row.dataId;
                 })
         }),
         table.column({
@@ -176,7 +173,7 @@
                 </tbody>
             </table>
         </Pane>
-        {#if $detailPanelData !== null}
+        {#if $detailPanelRowDataId !== null}
             <Pane minSize={20} size={40}>
                 <div class="p-4 flex flex-col gap-2">
                     <div class="flex flex-row justify-end">
@@ -223,7 +220,7 @@
                                 </svg>
                             </button>
                         {/if}
-                        <button on:click={() => ($detailPanelData = null)}>
+                        <button on:click={() => ($detailPanelRowDataId = null)}>
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 class="icon icon-tabler icon-tabler-x"
@@ -244,7 +241,7 @@
                     </div>
 
                     <div>
-                        <TitleEditableField bind:data={$detailPanelData.title} />
+                        <TitleEditableField bind:data={$data[$detailPanelRowDataId].title} />
                     </div>
                 </div>
             </Pane>
