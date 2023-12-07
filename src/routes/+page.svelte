@@ -178,11 +178,69 @@
         {#if $detailPanelData !== null}
             <Pane minSize={20} size={40}>
                 <div class="p-4">
-                    <button on:click={() => (panelHorizontal = false)}>Vertical</button>
-                    |
-                    <button on:click={() => (panelHorizontal = true)}>Horizontal</button>
-                    <hr />
-                    Panel right
+                    <div class="flex flex-row justify-end">
+                        {#if panelHorizontal == true}
+                            <button on:click={() => (panelHorizontal = false)}>
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="icon icon-tabler icon-tabler-layout-sidebar-right"
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    stroke-width="2"
+                                    stroke="currentColor"
+                                    fill="none"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                >
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path
+                                        d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z"
+                                    />
+                                    <path d="M15 4l0 16" />
+                                </svg>
+                            </button>
+                        {:else}
+                            <button on:click={() => (panelHorizontal = true)}>
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="icon icon-tabler icon-tabler-layout-bottombar"
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    stroke-width="2"
+                                    stroke="currentColor"
+                                    fill="none"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                >
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path
+                                        d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z"
+                                    />
+                                    <path d="M4 15l16 0" />
+                                </svg>
+                            </button>
+                        {/if}
+                        <button on:click={() => ($detailPanelData = null)}>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="icon icon-tabler icon-tabler-x"
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                stroke-width="2"
+                                stroke="currentColor"
+                                fill="none"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M18 6l-12 12" />
+                                <path d="M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
 
                     <p>
                         Title : {#if $detailPanelData?.title}
@@ -190,8 +248,6 @@
                         {:else}
                             -
                         {/if}
-
-                        <button on:click={() => ($detailPanelData = null)}>Close</button>
                     </p>
                 </div>
             </Pane>
