@@ -127,7 +127,7 @@
 </script>
 
 <div class="h-screen">
-    <Splitpanes horizontal={panelHorizontal}>
+    <Splitpanes horizontal={panelHorizontal} theme="my-theme">
         <Pane minSize={40}>
             <table {...$tableAttrs} class="w-full">
                 <thead>
@@ -198,3 +198,79 @@
         {/if}
     </Splitpanes>
 </div>
+
+<style>
+    :global(.splitpanes.my-theme .splitpanes__pane) {
+        background-color: white;
+    }
+    :global(.splitpanes.my-theme .splitpanes__splitter) {
+        background-color: #eee;
+        box-sizing: border-box;
+        position: relative;
+        flex-shrink: 0;
+    }
+    :global(.splitpanes.my-theme .splitpanes__splitter:before),
+    :global(.splitpanes.my-theme .splitpanes__splitter:after) {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        background-color: rgba(0, 0, 0, 0.15);
+        transition: background-color 0.3s;
+    }
+    :global(.splitpanes.my-theme .splitpanes__splitter:hover:before),
+    :global(.splitpanes.my-theme .splitpanes__splitter:hover:after) {
+        background-color: rgba(0, 0, 0, 0.25);
+    }
+    :global(.splitpanes.my-theme .splitpanes__splitter:first-child) {
+        cursor: auto;
+    }
+
+    :global(.my-theme.splitpanes .splitpanes .splitpanes__splitter) {
+        z-index: 1;
+    }
+    :global(.my-theme.splitpanes--vertical > .splitpanes__splitter),
+    :global(.my-theme .splitpanes--vertical > .splitpanes__splitter) {
+        width: 7px;
+        border-left: 1px solid #eee;
+        cursor: col-resize;
+    }
+    :global(.my-theme.splitpanes--vertical > .splitpanes__splitter:before),
+    :global(.my-theme.splitpanes--vertical > .splitpanes__splitter:after),
+    :global(.my-theme .splitpanes--vertical > .splitpanes__splitter:before),
+    :global(.my-theme .splitpanes--vertical > .splitpanes__splitter:after) {
+        transform: translateY(-50%);
+        width: 1px;
+        height: 30px;
+    }
+    :global(.my-theme.splitpanes--vertical > .splitpanes__splitter:before),
+    :global(.my-theme .splitpanes--vertical > .splitpanes__splitter:before) {
+        margin-left: -2px;
+    }
+    :global(.my-theme.splitpanes--vertical > .splitpanes__splitter:after),
+    :global(.my-theme .splitpanes--vertical > .splitpanes__splitter:after) {
+        margin-left: 1px;
+    }
+    :global(.my-theme.splitpanes--horizontal > .splitpanes__splitter),
+    :global(.my-theme .splitpanes--horizontal > .splitpanes__splitter) {
+        height: 7px;
+        border-top: 1px solid #eee;
+        cursor: row-resize;
+    }
+    :global(.my-theme.splitpanes--horizontal > .splitpanes__splitter:before),
+    :global(.my-theme.splitpanes--horizontal > .splitpanes__splitter:after),
+    :global(.my-theme .splitpanes--horizontal > .splitpanes__splitter:before),
+    :global(.my-theme .splitpanes--horizontal > .splitpanes__splitter:after) {
+        transform: translateX(-50%);
+        width: 30px;
+        height: 1px;
+    }
+    :global(.my-theme.splitpanes--horizontal > .splitpanes__splitter:before),
+    :global(.my-theme .splitpanes--horizontal > .splitpanes__splitter:before) {
+        margin-top: -2px;
+    }
+    :global(.my-theme.splitpanes--horizontal > .splitpanes__splitter:after),
+    :global(.my-theme .splitpanes--horizontal > .splitpanes__splitter:after) {
+        margin-top: 1px;
+    }
+</style>
