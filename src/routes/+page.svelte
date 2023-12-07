@@ -9,6 +9,7 @@
     import HeaderAddColmunMenu from "$lib/HeaderAddColumnMenu.svelte";
     import HeaderColmunMenu from "$lib/HeaderColumnMenu.svelte";
     import TitleCellRender from "$lib/TitleCellRender.svelte";
+    import TitleEditableField from "$lib/TitleEditableField.svelte";
 
     String.prototype.capitalize = function () {
         return this.charAt(0).toUpperCase() + this.slice(1);
@@ -177,7 +178,7 @@
         </Pane>
         {#if $detailPanelData !== null}
             <Pane minSize={20} size={40}>
-                <div class="p-4">
+                <div class="p-4 flex flex-col gap-2">
                     <div class="flex flex-row justify-end">
                         {#if panelHorizontal == true}
                             <button on:click={() => (panelHorizontal = false)}>
@@ -242,13 +243,9 @@
                         </button>
                     </div>
 
-                    <p>
-                        Title : {#if $detailPanelData?.title}
-                            <input type="text" bind:value={$detailPanelData.title} />
-                        {:else}
-                            -
-                        {/if}
-                    </p>
+                    <div>
+                        <TitleEditableField bind:data={$detailPanelData.title} />
+                    </div>
                 </div>
             </Pane>
         {/if}
