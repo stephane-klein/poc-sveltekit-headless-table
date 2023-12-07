@@ -1,15 +1,15 @@
 <script>
     export let data;
-    let editMode = false;
+    let isEditing = false;
     let tmpData;
 </script>
 
 <h2 class="flex flex-row items-center gap-2">
-    {#if editMode}
+    {#if isEditing}
         <input class="grow" type="text" bind:value={tmpData} />
         <button
             on:click={() => {
-                editMode = false;
+                isEditing = false;
                 data = tmpData;
             }}
         >
@@ -17,7 +17,7 @@
         </button>
         <button
             on:click={() => {
-                editMode = false;
+                isEditing = false;
             }}
         >
             cancel
@@ -29,7 +29,7 @@
                 class="hover:bg-gray-100 px-2 py-1"
                 on:click={() => {
                     tmpData = data;
-                    editMode = true;
+                    isEditing = true;
                 }}
             >
                 Edit title
