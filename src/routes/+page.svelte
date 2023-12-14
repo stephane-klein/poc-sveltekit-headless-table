@@ -322,6 +322,7 @@
 <style>
     :global(.splitpanes.my-theme .splitpanes__pane) {
         background-color: white;
+        overflow: scroll;
     }
     :global(.splitpanes.my-theme .splitpanes__splitter) {
         background-color: #eee;
