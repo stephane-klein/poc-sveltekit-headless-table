@@ -89,6 +89,76 @@
             id: 14,
             title: lorem.generateWords(4).capitalize(),
             status: "Todo"
+        },
+        {
+            id: 15,
+            title: lorem.generateWords(5).capitalize(),
+            status: "Todo"
+        },
+        {
+            id: 16,
+            title: lorem.generateWords(8).capitalize(),
+            status: "Todo"
+        },
+        {
+            id: 17,
+            title: lorem.generateWords(10).capitalize(),
+            status: "Todo"
+        },
+        {
+            id: 18,
+            title: lorem.generateWords(10).capitalize(),
+            status: "Todo"
+        },
+        {
+            id: 19,
+            title: lorem.generateWords(7).capitalize(),
+            status: "Todo"
+        },
+        {
+            id: 20,
+            title: lorem.generateWords(6).capitalize(),
+            status: "Todo"
+        },
+        {
+            id: 21,
+            title: lorem.generateWords(9).capitalize(),
+            status: "Todo"
+        },
+        {
+            id: 22,
+            title: lorem.generateWords(3).capitalize(),
+            status: "Todo"
+        },
+        {
+            id: 23,
+            title: lorem.generateWords(9).capitalize(),
+            status: "Todo"
+        },
+        {
+            id: 24,
+            title: lorem.generateWords(12).capitalize(),
+            status: "Todo"
+        },
+        {
+            id: 25,
+            title: lorem.generateWords(5).capitalize(),
+            status: "Todo"
+        },
+        {
+            id: 26,
+            title: lorem.generateWords(8).capitalize(),
+            status: "Todo"
+        },
+        {
+            id: 27,
+            title: lorem.generateWords(9).capitalize(),
+            status: "Todo"
+        },
+        {
+            id: 28,
+            title: lorem.generateWords(4).capitalize(),
+            status: "Todo"
         }
     ]);
 
