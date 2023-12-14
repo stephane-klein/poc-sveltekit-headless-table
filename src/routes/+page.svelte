@@ -1,6 +1,6 @@
 <script>
     import { LoremIpsum } from "lorem-ipsum";
-    import { readable, writable } from "svelte/store";
+    import { writable } from "svelte/store";
     import { Subscribe } from "svelte-subscribe";
     import { createTable, Render, createRender } from "svelte-headless-table";
     import { addHiddenColumns } from "svelte-headless-table/plugins";
@@ -174,7 +174,7 @@
                 createRender(TitleCellRender, {
                     id: value.id,
                     title: value.title
-                }).on("click", (event) => {
+                }).on("click", () => {
                     $detailPanelRowDataId = row.dataId;
                 })
         }),
