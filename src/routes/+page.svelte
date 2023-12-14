@@ -159,6 +159,41 @@
             id: 28,
             title: lorem.generateWords(4).capitalize(),
             status: "Todo"
+        },
+        {
+            id: 29,
+            title: lorem.generateWords(3).capitalize(),
+            status: "Todo"
+        },
+        {
+            id: 30,
+            title: lorem.generateWords(9).capitalize(),
+            status: "Todo"
+        },
+        {
+            id: 31,
+            title: lorem.generateWords(12).capitalize(),
+            status: "Todo"
+        },
+        {
+            id: 32,
+            title: lorem.generateWords(5).capitalize(),
+            status: "Todo"
+        },
+        {
+            id: 33,
+            title: lorem.generateWords(8).capitalize(),
+            status: "Todo"
+        },
+        {
+            id: 34,
+            title: lorem.generateWords(9).capitalize(),
+            status: "Todo"
+        },
+        {
+            id: 35,
+            title: lorem.generateWords(4).capitalize(),
+            status: "Todo"
         }
     ]);
 
@@ -195,6 +230,26 @@
 </script>
 
 <div class="h-screen">
+    <div class="m-auto w-5/6">
+        <p class="m-2">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam vitae pulvinar erat. Aliquam quis dolor vitae
+            enim pellentesque sagittis. Suspendisse in dui eu lectus egestas posuere quis id quam. Vivamus eget posuere
+            justo. Vestibulum quis neque at lorem tristique rhoncus sed in risus. Cras porta in ligula a dignissim.
+            Proin laoreet nulla nec volutpat dictum. Etiam commodo semper neque, a venenatis eros tempor tristique.
+            Aliquam suscipit, ipsum sit amet ultrices sagittis, elit mi pellentesque nunc, sit amet suscipit mauris ante
+            eget magna.
+        </p>
+
+        <p class="m-2">
+            Proin ut rhoncus est. Phasellus est justo, scelerisque sit amet elementum at, placerat quis tellus. Proin
+            magna purus, tincidunt vel egestas in, mollis faucibus turpis. Vivamus auctor eros id dolor varius, non
+            tempus tortor vestibulum. Aliquam velit justo, gravida quis odio nec, mollis dapibus leo. Aliquam erat
+            volutpat. Vestibulum rutrum eleifend sapien, pellentesque commodo ex ullamcorper et. Suspendisse vitae ante
+            libero. Sed lacus sapien, dapibus efficitur purus ut, elementum bibendum eros. Duis eget tempor felis, vitae
+            interdum lorem.
+        </p>
+    </div>
+
     <Splitpanes horizontal={panelHorizontal} theme="my-theme">
         <Pane minSize={40}>
             <table {...$tableAttrs} class="w-full">
