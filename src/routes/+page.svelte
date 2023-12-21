@@ -375,6 +375,9 @@
 </div>
 
 <style>
+    /* Small modification to the splitpane component theme.
+       The source code come from: https://orefalo.github.io/svelte-splitpanes/examples/styling/splitters
+    */
     :global(.splitpanes.my-theme .splitpanes__pane) {
         background-color: white;
         overflow: scroll;
