@@ -4,10 +4,13 @@
     import { Subscribe } from "svelte-subscribe";
     import { createTable, Render, createRender } from "svelte-headless-table";
     import { addHiddenColumns } from "svelte-headless-table/plugins";
+    import { addGridLayout } from "$lib/addGridLayout.js";
     import { Pane, Splitpanes } from "svelte-splitpanes";
 
-    import HeaderAddColmunMenu from "$lib/HeaderAddColumnMenu.svelte";
-    import HeaderColmunMenu from "$lib/HeaderColumnMenu.svelte";
+    import DefaultHeaderCell from "$lib/DefaultHeaderCell.svelte";
+    import AddColumnHeaderCell from "$lib/AddColumnHeaderCell.svelte";
+    // import HeaderAddColmunMenu from "$lib/HeaderAddColumnMenu.svelte";
+    // import HeaderColmunMenu from "$lib/HeaderColumnMenu.svelte";
     import TitleCellRender from "$lib/TitleCellRender.svelte";
     import TitleEditableField from "$lib/TitleEditableField.svelte";
 
@@ -198,12 +201,24 @@
     ]);
 
     const table = createTable(data, {
-        hideCols: addHiddenColumns()
+        hideCols: addHiddenColumns(),
+        grid: addGridLayout() // CSS Grid is used to implement table sticky header, more info see https://github.com/stephane-klein/poc-sveltekit-headless-table/issues/1#issuecomment-1865949792
     });
 
+    const columnCaptions = {
+        title: "Title",
+        status: "Status"
+    };
     const columns = table.createColumns([
         table.column({
-            header: "Title",
+            id: "title",
+            header: () =>
+                createRender(DefaultHeaderCell, {
+                    title: "Title",
+                    onHideField: () => {
+                        visibleColumns["title"] = false;
+                    }
+                }),
             accessor: (item) => item,
             cell: ({ row, value }) =>
                 createRender(TitleCellRender, {
@@ -214,14 +229,42 @@
                 })
         }),
         table.column({
-            header: "Status",
+            id: "status",
+            header: () =>
+                createRender(DefaultHeaderCell, {
+                    title: "Status",
+                    onHideField: () => {
+                        visibleColumns["status"] = false;
+                    }
+                }),
             accessor: "status"
+        }),
+        table.column({
+            id: "add_column",
+            header: () =>
+                createRender(AddColumnHeaderCell, {
+                    columns: columnCaptions,
+                    state: visibleColumns,
+                    onChange: (newValue) => {
+                        console.log("newValue", newValue);
+                        visibleColumns = newValue;
+                    }
+                }),
+            accessor: () => ""
         })
     ]);
 
-    const { flatColumns, headerRows, rows, tableAttrs, tableBodyAttrs, pluginStates } = table.createViewModel(columns);
+    const { flatColumns, headerRows, rows, tableAttrs, tableHeadAttrs, tableBodyAttrs, pluginStates } =
+        table.createViewModel(columns);
+
     const { hiddenColumnIds } = pluginStates.hideCols;
-    let visibleColumns = Object.fromEntries(flatColumns.map((c) => c.id).map((id) => [id, true]));
+    let visibleColumns = Object.fromEntries(
+        flatColumns
+            .map((c) => c.id)
+            .filter((id) => id != "add_column")
+            .map((id) => [id, true])
+    );
+
     $: $hiddenColumnIds = Object.entries(visibleColumns)
         .filter(([, visible]) => !visible)
         .map(([id]) => id);
@@ -229,9 +272,9 @@
     let panelHorizontal = true;
 </script>
 
-<div class="h-screen">
+<div class="max-h-screen h-screen flex flex-col">
     <div class="m-auto w-5/6">
-        <p class="m-2">
+        <p class="p-2">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam vitae pulvinar erat. Aliquam quis dolor vitae
             enim pellentesque sagittis. Suspendisse in dui eu lectus egestas posuere quis id quam. Vivamus eget posuere
             justo. Vestibulum quis neque at lorem tristique rhoncus sed in risus. Cras porta in ligula a dignissim.
@@ -240,7 +283,7 @@
             eget magna.
         </p>
 
-        <p class="m-2">
+        <p class="p-2">
             Proin ut rhoncus est. Phasellus est justo, scelerisque sit amet elementum at, placerat quis tellus. Proin
             magna purus, tincidunt vel egestas in, mollis faucibus turpis. Vivamus auctor eros id dolor varius, non
             tempus tortor vestibulum. Aliquam velit justo, gravida quis odio nec, mollis dapibus leo. Aliquam erat
@@ -250,32 +293,20 @@
         </p>
     </div>
 
-    <Splitpanes horizontal={panelHorizontal} theme="my-theme">
-        <Pane minSize={40}>
+    <Splitpanes horizontal={panelHorizontal} theme="my-theme" class="grow">
+        <Pane minSize={40} class="relative">
             <table {...$tableAttrs} class="w-full">
-                <thead>
+                <thead {...$tableHeadAttrs}>
                     {#each $headerRows as headerRow (headerRow.id)}
                         <Subscribe rowAttrs={headerRow.attrs()} let:rowAttrs>
                             <tr {...rowAttrs}>
                                 {#each headerRow.cells as cell (cell.id)}
                                     <Subscribe attrs={cell.attrs()} let:attrs>
                                         <th {...attrs} class="px-4 border-b-2 border-r text-left">
-                                            <div class="flex flex-row gap-2 items-center">
-                                                <div class="grow text-gray-500 text-sm">
-                                                    <Render of={cell.render()} />
-                                                </div>
-                                                <HeaderColmunMenu
-                                                    onHideField={() => {
-                                                        visibleColumns[cell.id] = false;
-                                                    }}
-                                                />
-                                            </div>
+                                            <Render of={cell.render()} />
                                         </th>
                                     </Subscribe>
                                 {/each}
-                                <th class="px-4 py-2 border-b-2 text-left">
-                                    <HeaderAddColmunMenu bind:state={visibleColumns} />
-                                </th>
                             </tr>
                         </Subscribe>
                     {/each}
@@ -291,7 +322,6 @@
                                         </td>
                                     </Subscribe>
                                 {/each}
-                                <td class="px-4 py-2 border-b"></td>
                             </tr>
                         </Subscribe>
                     {/each}
@@ -375,12 +405,28 @@
 </div>
 
 <style>
+    /* Add table sticky header */
+    [role="table"] {
+        overflow-y: auto;
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+    }
+    [role="columnheader"] {
+        background-color: white;
+        position: sticky;
+        top: 0;
+        padding: 5px;
+        border-bottom: 1px solid #e3e4e4;
+    }
+
     /* Small modification to the splitpane component theme.
        The source code come from: https://orefalo.github.io/svelte-splitpanes/examples/styling/splitters
     */
     :global(.splitpanes.my-theme .splitpanes__pane) {
         background-color: white;
-        overflow: scroll;
     }
     :global(.splitpanes.my-theme .splitpanes__splitter) {
         background-color: #eee;

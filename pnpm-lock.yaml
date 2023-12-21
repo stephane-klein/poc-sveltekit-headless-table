@@ -33,7 +33,7 @@ dependencies:
     specifier: 0.17.7
     version: 0.17.7(svelte@4.2.8)
   svelte-splitpanes:
-    specifier: ^0.8.0
+    specifier: 0.8.0
     version: 0.8.0(svelte@4.2.8)
   svelte-subscribe:
     specifier: 1.0.6
