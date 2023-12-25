@@ -37,5 +37,10 @@
         "svelte-subscribe": "1.0.6",
         "tailwindcss": "3.3.5",
         "vite": "5.0.4"
+    },
+    "overrides": {
+        "@rgossiaux/svelte-headlessui": {
+            "svelte": "$svelte"
+        }
     }
 }
